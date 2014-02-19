@@ -29,6 +29,7 @@ Vagrant.configure('2') do |config|
     wmd.vm.provision :chef_solo do |chef|
       chef.log_level = :debug
       chef.run_list = [
+        'recipe[apt]',
         'recipe[openlexington::ruby]',
         'recipe[whatsmydistrict]'
       ]
