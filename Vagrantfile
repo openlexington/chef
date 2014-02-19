@@ -46,6 +46,9 @@ Vagrant.configure('2') do |config|
           ruby: {
             version: '1.9.1'
           }
+        },
+        whatsmydistrict: {
+          database_password: 'password'
         }
       }
     end
