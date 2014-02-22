@@ -2,9 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.require_plugin 'vagrant-berkshelf'
-#Vagrant.require_plugin 'vagrant-omnibus'
 Vagrant.require_plugin 'vagrant-cachier'
-Vagrant.require_plugin 'vagrant-aws'
 
 Vagrant.configure('2') do |config|
   config.vm.define 'wmd' do |wmd|
@@ -21,7 +19,6 @@ Vagrant.configure('2') do |config|
 
     # plugin configuration
     wmd.berkshelf.enabled = true
-    #wmd.omnibus.chef_version = :latest
     wmd.cache.enable :apt
     wmd.cache.enable :chef
     wmd.cache.enable :gem
@@ -31,25 +28,15 @@ Vagrant.configure('2') do |config|
       chef.run_list = [
         'recipe[apt]',
         'recipe[openlexington::ruby]',
-        'recipe[whatsmydistrict]'
+        'recipe[openlexington::postgis]',
+        'recipe[whatsmydistrict::default]',
+        'recipe[whatsmydistrict::database]',
+        'recipe[whatsmydistrict::nginx]'
       ]
       chef.json = {
-        build_essential: {
-          compiletime: true
-        },
-        postgresql: {
-          password: {
-            postgres: 'password'
-          }
-        },
-        openlexington: {
-          ruby: {
-            version: '1.9.1'
-          }
-        },
-        whatsmydistrict: {
-          database_password: 'password'
-        }
+        build_essential: { compiletime: true },
+        postgresql: { password: { postgres: 'password' } },
+        openlexington: { ruby: { version: '1.9.1' } }
       }
     end
   end
