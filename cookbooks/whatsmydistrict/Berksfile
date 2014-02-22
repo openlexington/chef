@@ -1,0 +1,5 @@
+source 'https://api.berkshelf.com'
+
+cookbook 'apt', '= 2.3.9'
+cookbook 'nginx', '= 2.2.2'
+cookbook 'postgis', '= 0.2.4'
