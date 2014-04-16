@@ -32,8 +32,10 @@ git '/home/whatsmydistrict/WhatsMyDistrict' do
   action :checkout
 end
 
-[app_root, "#{app_root}/shared/log", "#{app_root}/shared/tmp", "#{app_root}/shared/models"].each do |d|
+[app_root, "#{app_root}/shared", "#{app_root}/shared/log", "#{app_root}/shared/tmp", "#{app_root}/shared/models"].each do |d|
   directory d do
+    owner 'whatsmydistrict'
+    group 'whatsmydistrict'
     recursive true
     action :create
   end
@@ -41,8 +43,8 @@ end
 
 template "#{app_root}/shared/models/database_model.rb" do
   source 'database_model.rb.erb'
-  owner 'root'
-  group 'root'
+  owner 'whatsmydistrict'
+  group 'whatsmydistrict'
   mode 0644
   variables :db_name => db_attr['db_name']
   variables :user => db_attr['user']
@@ -52,8 +54,8 @@ end
 
 template "#{app_root}/shared/unicorn.rb" do
   source 'unicorn.rb.erb'
-  owner 'root'
-  group 'root'
+  owner 'whatsmydistrict'
+  group 'whatsmydistrict'
   mode 0644
   variables :app_root => app_root
 end
